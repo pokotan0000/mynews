@@ -19,7 +19,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('news/create', 'Admin\NewsController@add');
 });
 
-//課題3の回答
+//課題3の回答　*
 Route::get('XXX', 'Admin\AAAController@bbb');
 
 //課題4の回答
