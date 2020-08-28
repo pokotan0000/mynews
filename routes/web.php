@@ -32,18 +32,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//ログインしていない場合のリダイレクト処理に、middlewareを利用します。
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('news/create', 'Admin\NewsController@add')->middleware('auth');
+
+//ログインしていない場合のリダイレクト処理に、middlewareを利用します。(auth 認証や許可)
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+    Route::get('news/create', 'Admin\NewsController@add');
+    Route::post('news/create', 'Admin\NewsController@create');
+    Route::get('profile/create', 'Admin\ProfileController@add');
+    Route::get('profile/edit', 'Admin\ProfileController@edit');
 });
 
-//ログインしていない場合のリダイレクト処理に、middlewareを利用します。
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('profile/create', 'Admin\ProfileController@add')->middleware('auth');
-});
 
-//ログインしていない場合のリダイレクト処理に、middlewareを利用します。
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('profile/edit', 'Admin\ProfileController@add')->middleware('auth');
-});
 
