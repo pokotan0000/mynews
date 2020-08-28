@@ -19,11 +19,31 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('news/create', 'Admin\NewsController@add');
 });
 
-//課題3の回答　*
+//「PHP/Laravel 09 Routingについて理解する」課題3の回答　*
 Route::get('XXX', 'Admin\AAAController@bbb');
 
-//課題4の回答
+//「PHP/Laravel 09 Routingについて理解する」課題4の回答
 Route::group(['prefix' => 'admin'], function() {
     Route::get('profile/create', 'Admin\ProfileController@add');
     Route::get('profile/edit', 'Admin\ProfileController@edit');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//ログインしていない場合のリダイレクト処理に、middlewareを利用します。
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('news/create', 'Admin\NewsController@add')->middleware('auth');
+});
+
+//ログインしていない場合のリダイレクト処理に、middlewareを利用します。
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('profile/create', 'Admin\ProfileController@add')->middleware('auth');
+});
+
+//ログインしていない場合のリダイレクト処理に、middlewareを利用します。
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('profile/edit', 'Admin\ProfileController@add')->middleware('auth');
+});
+
