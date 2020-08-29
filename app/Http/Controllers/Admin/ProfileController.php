@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 //以下を追加することでProfile Modelが扱えるようになる
-use App\profile;
+use App\Profile;
 
 class ProfileController extends Controller
 {
