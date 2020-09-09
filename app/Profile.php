@@ -14,4 +14,11 @@ class Profile extends Model
         'hobby' => 'required',  
         'introduction' => 'required',  
     );
+    
+    // Profilelogモデルに関連付けを行う
+    public function profilelogs()
+    {
+      return $this->hasMany('App\Profilelog');
+
+    }
 }

@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 
 //以下を追加することでProfile Modelが扱えるようになる
 use App\Profile;
+use App\Profilelog;
+
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -72,7 +75,15 @@ class ProfileController extends Controller
         //該当するデータを上書きして保存する
         $profile->fill($profile_form)->save();
         
-        return redirect('admin/profile/edit');
+        //ProfileController の update Actionで、Profile Modelを保存するタイミングで、同時に Profilelog Modelにも編集履歴を追加するよう実装
+        $profilelog = new Profilelog;
+        $profilelog->profile_id = $profile->id;
+        $profilelog->edited_at = Carbon::now();
+        $profilelog->save();
+        
+        
+        //return redirect('admin/profile/edit');
+        return view('admin.profile.edit', ['profile_form' => $profile]);
     }
     
     public function delete(Request $request)

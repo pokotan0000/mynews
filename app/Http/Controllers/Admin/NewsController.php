@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 
 //以下を追加することでNews Modelが扱えるようになる
 use App\News;
+use App\History;
+
+use Carbon\Carbon;
 
 class NewsController extends Controller
 {
@@ -88,6 +91,12 @@ class NewsController extends Controller
         
         //該当するデータを上書きして保存する
         $news->fill($news_form)->save();
+        
+        //NewsController の update Actionで、News Modelを保存するタイミングで、同時に History Modelにも編集履歴を追加するよう実装
+        $history = new History;
+        $history->news_id = $news->id;
+        $history->edited_at = Carbon::now();
+        $history->save();
         
         return redirect('admin/news');
     }
